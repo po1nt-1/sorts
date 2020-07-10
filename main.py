@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+import numpy as np
 from PySide2.QtWidgets import QMainWindow, QComboBox, QApplication, QMessageBox
 
 
@@ -12,28 +14,35 @@ data1 = []
 data2 = []
 
 
-# def g_tim_comparisons_count(value):
-#     return sort.tim_comparisons_count
+def histoogramm(data1, data2):
+    plt.subplot(5, 1, 1)
 
+    objects = ('TimeSort', 'MergeSort')
+    y_pos = np.arange(len(objects))
+    performance = [data1[0], data2[0]]
+    plt.bar(y_pos, performance, align='center', alpha=0.8, color="bg")
+    plt.xticks(y_pos, objects)
+    plt.title("Время")
 
-# def g_tim_transpositions_count(value):
-#     return sort.tim_transpositions_count
+    plt.subplot(5, 1, 3)
 
+    objects = ('TimeSort', 'MergeSort')
+    y_pos = np.arange(len(objects))
+    performance = [data1[1], data2[1]]
+    plt.bar(y_pos, performance, align='center', alpha=0.8, color="bg")
+    plt.xticks(y_pos, objects)
+    plt.title("Сравнения")
 
-# def g_tim_total_time(value):
-#     return sort.tim_total_time
+    plt.subplot(5, 1, 5)
 
+    objects = ('TimeSort', 'MergeSort')
+    y_pos = np.arange(len(objects))
+    performance = [data1[2], data2[2]]
+    plt.bar(y_pos, performance, align='center', alpha=0.8, color="bg")
+    plt.xticks(y_pos, objects)
+    plt.title("Перестановки")
 
-# def g_merge_comparisons_count(value):
-#     return sort.merge_comparisons_count
-
-
-# def g_merge_transpositions_count(value):
-#     return sort.merge_transpositions_count
-
-
-# def g_merge_total_time(value):
-#     return sort.merge_total_time
+    plt.show()
 
 
 class MyQtApp(gui.Ui_MainWindow, QMainWindow):
@@ -99,7 +108,23 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
             data2 = data1.copy()
 
             self.__sort()
+
+            tim = [sort.tim_total_time, sort.tim_comparisons_count,
+                   sort.tim_transpositions_count]
+            merge = [sort.merge_total_time, sort.merge_comparisons_count,
+                     sort.merge_transpositions_count]
+
+            histoogramm(tim, merge)
             self.unlock()
+
+            print("tim_comparisons_count:", sort.tim_comparisons_count)
+            print("tim_transpositions_count:", sort.tim_transpositions_count)
+            print("tim_total_time:", sort.tim_total_time)
+
+            print("merge_comparisons_count:", sort.merge_comparisons_count)
+            print("merge_transpositions_count:",
+                  sort.merge_transpositions_count)
+            print("merge_total_time:", sort.merge_total_time)
 
     def __sort(self):
         global data1
@@ -110,29 +135,23 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
 
         db.write(data1, sort_mode="")
 
-        print("tim_comparisons_count:", sort.tim_comparisons_count)
-        print("tim_transpositions_count:", sort.tim_transpositions_count)
-        print("tim_total_time:", sort.tim_total_time)
-
-        print("merge_comparisons_count:", sort.merge_comparisons_count)
-        print("merge_transpositions_count:", sort.merge_transpositions_count)
-        print("merge_total_time:", sort.merge_total_time)
-
     def block(self):
-        self.gen_button.setDisabled(True)
-        self.update_button.setDisabled(True)
-        self.analyze_button.setDisabled(True)
-        self.select_gen_mode.setDisabled(True)
-        self.enter_size_list.setDisabled(True)
-        self.file_list.setDisabled(True)
+        # TODO does not work
+        self.gen_button.setHidden(True)
+        self.update_button.setHidden(True)
+        self.analyze_button.setHidden(True)
+        self.select_gen_mode.setHidden(True)
+        self.enter_size_list.setHidden(True)
+        self.file_list.setHidden(True)
 
     def unlock(self):
-        self.gen_button.setDisabled(False)
-        self.update_button.setDisabled(False)
-        self.analyze_button.setDisabled(False)
-        self.select_gen_mode.setDisabled(False)
-        self.enter_size_list.setDisabled(False)
-        self.file_list.setDisabled(False)
+        # TODO does not work
+        self.gen_button.setHidden(False)
+        self.update_button.setHidden(False)
+        self.analyze_button.setHidden(False)
+        self.select_gen_mode.setHidden(False)
+        self.enter_size_list.setHidden(False)
+        self.file_list.setHidden(False)
 
 
 if __name__ == "__main__":
