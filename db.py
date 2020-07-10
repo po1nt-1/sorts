@@ -3,9 +3,6 @@ import json
 import sys
 import inspect
 
-import gen
-import sort
-
 
 class my_error(Exception):
     pass
@@ -76,10 +73,8 @@ def write(data, gen_mode=None, sort_mode=None):
     else:
         raise my_error("Не поддерживаемый режим генерации")
 
-    sort_modes = ["merge", "tim"]
-
-    if sort_mode in sort_modes:
-        path_to_file = path + f"/{len(data)}_{sort_mode}sorted"
+    if sort_mode is not None:
+        path_to_file = path + f"/{len(data)}_sorted"
         with open(path_to_file, 'w', encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         return

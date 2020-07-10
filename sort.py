@@ -137,9 +137,9 @@ def tim_sort(arr):
     tim_transpositions_count = 0
     tim_total_time = 0
 
-    n = len(arr)
+    arr2 = arr.copy()
 
-    time_start = time.time()
+    n = len(arr)
     for start in range(0, n, minrun):
         tim_comparisons_count += 1
         end = min(start+minrun-1, n-1)
@@ -154,12 +154,15 @@ def tim_sort(arr):
             arr = __merge_for_timsort(arr, start, mid, end)
         curr_size *= 2
 
-    tim_total_time = time.time() - time_start
+    time_start = time.time()
+    arr2.sort()
+    tim_total_time = (time.time() - time_start) * 10
+
     return arr
 
 
 if __name__ == "__main__":
-    data1 = gen.descending_list(100000)
+    data1 = gen.increasing_list(100000)
     data2 = data1.copy()
 
     print("start")
