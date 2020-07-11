@@ -1,13 +1,13 @@
-import matplotlib.pyplot as plt
-import matplotlib as mpl
 import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 from PySide2.QtWidgets import QMainWindow, QComboBox, QApplication, QMessageBox
 
 
-import db
-import gen
-import sort
-import gui
+import __db as db
+import __gen as gen
+import __sort as sort
+import __gui as gui
 
 
 files = []
@@ -21,36 +21,31 @@ class end_error(Exception):
 
 def histoogramm(data1, data2):
     mpl.rcParams['toolbar'] = 'None'
-
     plt.rcParams['figure.figsize'] = [5, 7]
-
     plt.figure(num="Результаты")
-    plt.subplot(5, 1, 1)
-
     objects = ('TimeSort', 'MergeSort')
     y_pos = np.arange(len(objects))
-    performance = [data1[0], data2[0]]
-    plt.bar(y_pos, performance, align='center', alpha=0.65, color="bg")
+
+    plt.subplot(5, 1, 1)
     plt.xticks(y_pos, objects)
-    plt.title("Время")
+    plt.title("Время, сек")
+    performance = [data1[0], data2[0]]
+    plt.bar(y_pos, performance, align='center',
+            alpha=0.9, color=["r", "k"])
 
     plt.subplot(5, 1, 3)
-
-    objects = ('TimeSort', 'MergeSort')
-    y_pos = np.arange(len(objects))
-    performance = [data1[1], data2[1]]
-    plt.bar(y_pos, performance, align='center', alpha=0.65, color="bg")
+    plt.bar(y_pos, performance, align='center',
+            alpha=0.9, color=["r", "k"])
     plt.xticks(y_pos, objects)
-    plt.title("Сравнения")
+    plt.title("Количество сравнений")
+    performance = [data1[1], data2[1]]
 
     plt.subplot(5, 1, 5)
-
-    objects = ('TimeSort', 'MergeSort')
-    y_pos = np.arange(len(objects))
-    performance = [data1[2], data2[2]]
-    plt.bar(y_pos, performance, align='center', alpha=0.65, color="bg")
+    plt.bar(y_pos, performance, align='center',
+            alpha=0.9, color=["r", "k"])
     plt.xticks(y_pos, objects)
-    plt.title("Перестановки")
+    plt.title("Количество перестановок")
+    performance = [data1[2], data2[2]]
 
     plt.show()
 
@@ -131,20 +126,21 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
                    sort.tim_transpositions_count]
             merge = [sort.merge_total_time, sort.merge_comparisons_count,
                      sort.merge_transpositions_count]
+
             histoogramm(tim, merge)
 
             self.unlock()
 
-            # # debug
-            # print("tim_comparisons_count:", sort.tim_comparisons_count)
-            # print("tim_transpositions_count:", sort.tim_transpositions_count)
-            # print("tim_total_time:", sort.tim_total_time)
+            # debug
+            print("tim_comparisons_count:", sort.tim_comparisons_count)
+            print("tim_transpositions_count:", sort.tim_transpositions_count)
+            print("tim_total_time:", sort.tim_total_time)
 
-            # print("merge_comparisons_count:", sort.merge_comparisons_count)
-            # print("merge_transpositions_count:",
-            #       sort.merge_transpositions_count)
-            # print("merge_total_time:", sort.merge_total_time)
-            # # debug
+            print("merge_comparisons_count:", sort.merge_comparisons_count)
+            print("merge_transpositions_count:",
+                  sort.merge_transpositions_count)
+            print("merge_total_time:", sort.merge_total_time)
+            # debug
 
     def __sort(self):
         global data1

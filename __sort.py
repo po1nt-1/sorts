@@ -2,7 +2,7 @@ import operator
 import random
 import time
 
-import gen
+import __gen
 
 
 tim_comparisons_count = 0
@@ -146,6 +146,7 @@ def tim_sort(arr):
         arr = __InsSort(arr, start, end)
 
     curr_size = minrun
+
     while curr_size < n:
         for start in range(0, n, curr_size*2):
             tim_comparisons_count += 2
@@ -159,26 +160,3 @@ def tim_sort(arr):
     tim_total_time = (time.time() - time_start) * 10
 
     return arr
-
-
-if __name__ == "__main__":
-    data1 = gen.increasing_list(100000)
-    data2 = data1.copy()
-
-    print("start")
-    print(data1[:5], "...", data1[-5:])
-    data_sorted_by_tim = tim_sort(data1)
-    print(data_sorted_by_tim[:5], "...", data_sorted_by_tim[-5:])
-    print("end")
-    print("tim_comparisons_count:", tim_comparisons_count)
-    print("tim_transpositions_count:", tim_transpositions_count)
-    print("tim_total_time:", tim_total_time)
-
-    print("start")
-    print(data2[:5], "...", data2[-5:])
-    data_sorted_by_merge = merge_sort(data2)
-    print(data_sorted_by_merge[:5], "...", data_sorted_by_merge[-5:])
-    print("end")
-    print("merge_comparisons_count:", merge_comparisons_count)
-    print("merge_transpositions_count:", merge_transpositions_count)
-    print("merge_total_time:", merge_total_time)
