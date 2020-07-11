@@ -4,12 +4,12 @@ import sys
 import inspect
 
 
-class my_error(Exception):
+class local_error(Exception):
     pass
 
 
-def get_script_dir(follow_symlinks=True) -> str:
-    '''получить директорию со скриптом'''
+def get_script_dir(follow_symlinks=True):
+    '''получить директорию со исполняемым скриптом'''
     # https://clck.ru/P8NUA
     if getattr(sys, 'frozen', False):  # type: ignore
         path = os.path.abspath(sys.executable)
@@ -23,75 +23,51 @@ def get_script_dir(follow_symlinks=True) -> str:
 def read(file_name, folder_name):
     path = os.path.join(get_script_dir(), folder_name, file_name)
 
-    if folder_name != "sorted_lists" and folder_name != "generated_lists":
-        raise my_error("Что-то не так")
-
     if not os.path.exists(path):
-        raise my_error("Папка с файлом не существует")
+        raise local_error("Папка с файлом\nне существует")
 
     data = []
     try:
         with open(path, 'r', encoding="utf-8") as f:
             data = json.load(f)
     except json.decoder.JSONDecodeError:
-        raise my_error("Ошибка чтения файла")
+        raise local_error("Некорректное\nчтение файла")
 
     if not isinstance(data, list):
-        raise my_error("Ошибка чтения файла")
+        raise local_error("Некорректное\nчтение файла")
+
+    for elem in data:
+        if not isinstance(elem, int):
+            raise local_error("Некорректное\nчтение файла")
 
     return data
 
 
-def write(data, gen_mode=None, sort_mode=None):
-    '''
-    "increasing", "descending", "random", "recurring", "partially"\n
-    "merge", "tim"
-    '''
-    if gen_mode is None and sort_mode is None:
-        raise my_error("Что-то не так")
-    if gen_mode is not None and sort_mode is not None:
-        raise my_error("Что-то не так")
+def write(data, gen_mode=None, sort_mode=False):
 
     if gen_mode is not None:
         path = os.path.join(get_script_dir(), "generated_lists")
-    elif sort_mode is not None:
+    elif sort_mode:
         path = os.path.join(get_script_dir(), "sorted_lists")
 
     if not os.path.exists(path):
         os.mkdir(path)
 
-    gen_modes = ["increasing", "descending",
-                 "random", "recurring", "partially"]
-
-    if gen_mode in gen_modes:
+    if gen_mode is not None:
         path_to_file = path + f"/{gen_mode}_{len(data)}"
         with open(path_to_file, 'w', encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-        return
-    elif gen_mode is None:
-        pass
-    else:
-        raise my_error("Не поддерживаемый режим генерации")
 
-    if sort_mode is not None:
+    if sort_mode:
         path_to_file = path + f"/{len(data)}_sorted"
         with open(path_to_file, 'w', encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-        return
-    elif sort_mode is None:
-        pass
-    else:
-        raise my_error("Не поддерживаемый режим сортировки")
 
 
 def get_file_list():
     path = os.path.join(get_script_dir(), "generated_lists")
 
     if not os.path.exists(path):
-        raise my_error("Папка generated_lists не существует")
+        raise local_error("Папка generated_lists\nне существует")
 
     return os.listdir(path)
-
-
-if __name__ == "__main__":
-    pass

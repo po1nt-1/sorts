@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import numpy as np
 from PySide2.QtWidgets import QMainWindow, QComboBox, QApplication, QMessageBox
 
@@ -14,13 +15,22 @@ data1 = []
 data2 = []
 
 
+class end_error(Exception):
+    pass
+
+
 def histoogramm(data1, data2):
+    mpl.rcParams['toolbar'] = 'None'
+
+    plt.rcParams['figure.figsize'] = [5, 7]
+
+    plt.figure(num="Результаты")
     plt.subplot(5, 1, 1)
 
     objects = ('TimeSort', 'MergeSort')
     y_pos = np.arange(len(objects))
     performance = [data1[0], data2[0]]
-    plt.bar(y_pos, performance, align='center', alpha=0.8, color="bg")
+    plt.bar(y_pos, performance, align='center', alpha=0.65, color="bg")
     plt.xticks(y_pos, objects)
     plt.title("Время")
 
@@ -29,7 +39,7 @@ def histoogramm(data1, data2):
     objects = ('TimeSort', 'MergeSort')
     y_pos = np.arange(len(objects))
     performance = [data1[1], data2[1]]
-    plt.bar(y_pos, performance, align='center', alpha=0.8, color="bg")
+    plt.bar(y_pos, performance, align='center', alpha=0.65, color="bg")
     plt.xticks(y_pos, objects)
     plt.title("Сравнения")
 
@@ -38,7 +48,7 @@ def histoogramm(data1, data2):
     objects = ('TimeSort', 'MergeSort')
     y_pos = np.arange(len(objects))
     performance = [data1[2], data2[2]]
-    plt.bar(y_pos, performance, align='center', alpha=0.8, color="bg")
+    plt.bar(y_pos, performance, align='center', alpha=0.65, color="bg")
     plt.xticks(y_pos, objects)
     plt.title("Перестановки")
 
@@ -51,17 +61,19 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         self.setupUi(self)
         self.gen_button.clicked.connect(self.gen)
         self.update_button.clicked.connect(self.upd)
-        self.analyze_button.clicked.connect(self.anal)
+        self.analyze_button.clicked.connect(self.anz)
 
     def gen(self):
         size = self.enter_size_list.text()
         if not size.isdigit():
-            QMessageBox.about(self, "Предупреждение", "Не корректный ввод")
+            QMessageBox.about(self, "Ошибка", "Некорректный ввод")
+
         elif int(size) < 1:
-            QMessageBox.about(self, "Предупреждение", "Не корректный ввод")
+            QMessageBox.about(self, "Ошибка", "Некорректный ввод")
         else:
             size = int(size)
             gen_inx = self.select_gen_mode.currentIndex()
+
             self.block()
             if gen_inx == 0:
                 raw_list = gen.increasing_list(size)
@@ -78,20 +90,22 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
             elif gen_inx == 4:
                 raw_list = gen.recurring_list(size)
                 db.write(raw_list, gen_mode="recurring")
-            else:
-                QMessageBox.about(self, "", "Что-то не так")
             self.unlock()
 
-            QMessageBox.about(self, "", "Последовательность\nсгенерирована")
+            QMessageBox.about(self, "Выполнено",
+                              "Последовательность\nсгенерирована")
 
     def upd(self):
         global files
-        files = db.get_file_list()
+        try:
+            files = db.get_file_list()
+        except db.local_error as e:
+            QMessageBox.about(self, "Ошибка", str(e))
 
         self.file_list.clear()
         self.file_list.insertItems(0, files)
 
-    def anal(self):
+    def anz(self):
         global files
         global data1
         global data2
@@ -99,12 +113,16 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         file_num = self.file_list.currentRow()
 
         if file_num == -1:
-            QMessageBox.about(self, "Предупреждение", "Не выбран файл")
+            QMessageBox.about(self, "Ошибка", "Не выбран файл")
         else:
             selected_file = files[file_num]
 
             self.block()
-            data1 = db.read(selected_file, "generated_lists")
+            try:
+                data1 = db.read(selected_file, "generated_lists")
+            except db.local_error as e:
+                QMessageBox.about(self, "Ошибка", str(e))
+
             data2 = data1.copy()
 
             self.__sort()
@@ -113,18 +131,20 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
                    sort.tim_transpositions_count]
             merge = [sort.merge_total_time, sort.merge_comparisons_count,
                      sort.merge_transpositions_count]
-
             histoogramm(tim, merge)
+
             self.unlock()
 
-            print("tim_comparisons_count:", sort.tim_comparisons_count)
-            print("tim_transpositions_count:", sort.tim_transpositions_count)
-            print("tim_total_time:", sort.tim_total_time)
+            # # debug
+            # print("tim_comparisons_count:", sort.tim_comparisons_count)
+            # print("tim_transpositions_count:", sort.tim_transpositions_count)
+            # print("tim_total_time:", sort.tim_total_time)
 
-            print("merge_comparisons_count:", sort.merge_comparisons_count)
-            print("merge_transpositions_count:",
-                  sort.merge_transpositions_count)
-            print("merge_total_time:", sort.merge_total_time)
+            # print("merge_comparisons_count:", sort.merge_comparisons_count)
+            # print("merge_transpositions_count:",
+            #       sort.merge_transpositions_count)
+            # print("merge_total_time:", sort.merge_total_time)
+            # # debug
 
     def __sort(self):
         global data1
@@ -133,25 +153,26 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         data1_sorted = sort.tim_sort(data1)
         sort.merge_sort(data2)
 
-        db.write(data1, sort_mode="")
+        try:
+            db.write(data1, sort_mode=True)
+        except db.local_error as e:
+            QMessageBox.about(self, "Ошибка", str(e))
 
     def block(self):
-        # TODO does not work
-        self.gen_button.setHidden(True)
-        self.update_button.setHidden(True)
-        self.analyze_button.setHidden(True)
-        self.select_gen_mode.setHidden(True)
-        self.enter_size_list.setHidden(True)
-        self.file_list.setHidden(True)
+        self.gen_button.setDisabled(True)
+        self.update_button.setDisabled(True)
+        self.analyze_button.setDisabled(True)
+        self.select_gen_mode.setDisabled(True)
+        self.enter_size_list.setDisabled(True)
+        self.file_list.setDisabled(True)
 
     def unlock(self):
-        # TODO does not work
-        self.gen_button.setHidden(False)
-        self.update_button.setHidden(False)
-        self.analyze_button.setHidden(False)
-        self.select_gen_mode.setHidden(False)
-        self.enter_size_list.setHidden(False)
-        self.file_list.setHidden(False)
+        self.gen_button.setDisabled(False)
+        self.update_button.setDisabled(False)
+        self.analyze_button.setDisabled(False)
+        self.select_gen_mode.setDisabled(False)
+        self.enter_size_list.setDisabled(False)
+        self.file_list.setDisabled(False)
 
 
 if __name__ == "__main__":

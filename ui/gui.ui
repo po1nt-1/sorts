@@ -6,88 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>485</height>
+    <width>250</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
-    <height>485</height>
+    <width>250</width>
+    <height>450</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>900</width>
-    <height>485</height>
+    <width>250</width>
+    <height>450</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Комиссия</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(41, 43, 47);
+alternate-background-color: rgb(218, 0, 27);
+color: rgb(255, 255, 255);
+
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
-      <item>
-       <widget class="QWidget" name="hist1" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>150</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QWidget" name="hist2" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>150</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QWidget" name="hist3" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>150</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="1">
+    <item row="0" column="0">
      <widget class="QFrame" name="frame">
       <property name="minimumSize">
        <size>
@@ -107,6 +54,9 @@
         <weight>75</weight>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(41, 43, 47);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -136,9 +86,15 @@
             <widget class="QLineEdit" name="enter_size_list">
              <property name="font">
               <font>
+               <pointsize>10</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">selection-background-color: rgb(218, 0, 27);
+background-color: rgb(32, 34, 37);
+color: rgb(255, 255, 255);</string>
              </property>
              <property name="inputMethodHints">
               <set>Qt::ImhNone</set>
@@ -156,6 +112,10 @@
            </item>
            <item row="7" column="0">
             <widget class="QPushButton" name="gen_button">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(218, 0, 27);</string>
+             </property>
              <property name="text">
               <string>Сгенерировать</string>
              </property>
@@ -170,6 +130,20 @@
                <bold>true</bold>
               </font>
              </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(32, 34, 37);
+selection-background-color: rgb(218, 0, 27);
+color: rgb(255, 255, 255);
+
+alternate-background-color: rgb(214, 0, 26);
+border-color: rgb(214, 0, 26);
+border-top-color: rgb(214, 0, 26);
+border-right-color: rgb(214, 0, 26);
+border-bottom-color: rgb(214, 0, 26);
+border-left-color: rgb(214, 0, 26);
+gridline-color: rgb(214, 0, 26);
+selection-color: rgb(214, 0, 26);</string>
+             </property>
              <property name="viewMode">
               <enum>QListView::ListMode</enum>
              </property>
@@ -177,6 +151,10 @@
            </item>
            <item row="1" column="0">
             <widget class="QComboBox" name="select_gen_mode">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(32, 34, 37);
+color: rgb(255, 255, 255);</string>
+             </property>
              <item>
               <property name="text">
                <string>Возрастающая</string>
@@ -213,6 +191,9 @@
                <bold>true</bold>
               </font>
              </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);</string>
+             </property>
              <property name="text">
               <string>Тип последовательности</string>
              </property>
@@ -240,6 +221,9 @@
                <bold>true</bold>
               </font>
              </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);</string>
+             </property>
              <property name="text">
               <string>Количество элементов 
 последовательности</string>
@@ -263,6 +247,10 @@
              </item>
              <item>
               <widget class="QPushButton" name="analyze_button">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(218, 0, 27);</string>
+               </property>
                <property name="text">
                 <string>Анализировать</string>
                </property>
@@ -285,6 +273,10 @@
            </item>
            <item row="9" column="0">
             <widget class="QPushButton" name="update_button">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(218, 0, 27);</string>
+             </property>
              <property name="text">
               <string>Обновить</string>
              </property>

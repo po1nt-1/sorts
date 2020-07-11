@@ -20,44 +20,18 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(900, 485)
-        MainWindow.setMinimumSize(QSize(900, 485))
-        MainWindow.setMaximumSize(QSize(900, 485))
+        MainWindow.resize(250, 450)
+        MainWindow.setMinimumSize(QSize(250, 450))
+        MainWindow.setMaximumSize(QSize(250, 450))
+        MainWindow.setStyleSheet(u"background-color: rgb(41, 43, 47);\n"
+"alternate-background-color: rgb(218, 0, 27);\n"
+"color: rgb(255, 255, 255);\n"
+"\n"
+"")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.horizontalLayout_5 = QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.hist1 = QWidget(self.centralwidget)
-        self.hist1.setObjectName(u"hist1")
-        self.hist1.setMinimumSize(QSize(150, 150))
-
-        self.horizontalLayout_5.addWidget(self.hist1)
-
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_5)
-
-        self.hist2 = QWidget(self.centralwidget)
-        self.hist2.setObjectName(u"hist2")
-        self.hist2.setMinimumSize(QSize(150, 150))
-
-        self.horizontalLayout_5.addWidget(self.hist2)
-
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_4)
-
-        self.hist3 = QWidget(self.centralwidget)
-        self.hist3.setObjectName(u"hist3")
-        self.hist3.setMinimumSize(QSize(150, 150))
-
-        self.horizontalLayout_5.addWidget(self.hist3)
-
-
-        self.gridLayout.addLayout(self.horizontalLayout_5, 0, 2, 1, 1)
-
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
         self.frame.setMinimumSize(QSize(225, 150))
@@ -67,6 +41,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.frame.setFont(font)
+        self.frame.setStyleSheet(u"background-color: rgb(41, 43, 47);")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.gridLayout_3 = QGridLayout(self.frame)
@@ -81,10 +56,10 @@ class Ui_MainWindow(object):
 
         self.enter_size_list = QLineEdit(self.frame)
         self.enter_size_list.setObjectName(u"enter_size_list")
-        font1 = QFont()
-        font1.setBold(True)
-        font1.setWeight(75)
-        self.enter_size_list.setFont(font1)
+        self.enter_size_list.setFont(font)
+        self.enter_size_list.setStyleSheet(u"selection-background-color: rgb(218, 0, 27);\n"
+"background-color: rgb(32, 34, 37);\n"
+"color: rgb(255, 255, 255);")
         self.enter_size_list.setInputMethodHints(Qt.ImhNone)
         self.enter_size_list.setMaxLength(7)
         self.enter_size_list.setClearButtonEnabled(False)
@@ -93,12 +68,26 @@ class Ui_MainWindow(object):
 
         self.gen_button = QPushButton(self.frame)
         self.gen_button.setObjectName(u"gen_button")
+        self.gen_button.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(218, 0, 27);")
 
         self.gridLayout_2.addWidget(self.gen_button, 7, 0, 1, 1)
 
         self.file_list = QListWidget(self.frame)
         self.file_list.setObjectName(u"file_list")
         self.file_list.setFont(font)
+        self.file_list.setStyleSheet(u"background-color: rgb(32, 34, 37);\n"
+"selection-background-color: rgb(218, 0, 27);\n"
+"color: rgb(255, 255, 255);\n"
+"\n"
+"alternate-background-color: rgb(214, 0, 26);\n"
+"border-color: rgb(214, 0, 26);\n"
+"border-top-color: rgb(214, 0, 26);\n"
+"border-right-color: rgb(214, 0, 26);\n"
+"border-bottom-color: rgb(214, 0, 26);\n"
+"border-left-color: rgb(214, 0, 26);\n"
+"gridline-color: rgb(214, 0, 26);\n"
+"selection-color: rgb(214, 0, 26);")
         self.file_list.setViewMode(QListView.ListMode)
 
         self.gridLayout_2.addWidget(self.file_list, 10, 0, 1, 1)
@@ -110,12 +99,15 @@ class Ui_MainWindow(object):
         self.select_gen_mode.addItem("")
         self.select_gen_mode.addItem("")
         self.select_gen_mode.setObjectName(u"select_gen_mode")
+        self.select_gen_mode.setStyleSheet(u"background-color: rgb(32, 34, 37);\n"
+"color: rgb(255, 255, 255);")
 
         self.gridLayout_2.addWidget(self.select_gen_mode, 1, 0, 1, 1)
 
         self.label_2 = QLabel(self.frame)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setFont(font)
+        self.label_2.setStyleSheet(u"color: rgb(255, 255, 255);")
 
         self.gridLayout_2.addWidget(self.label_2, 0, 0, 1, 1)
 
@@ -126,6 +118,7 @@ class Ui_MainWindow(object):
         self.label_3 = QLabel(self.frame)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setFont(font)
+        self.label_3.setStyleSheet(u"color: rgb(255, 255, 255);")
 
         self.gridLayout_2.addWidget(self.label_3, 3, 0, 1, 1)
 
@@ -137,6 +130,8 @@ class Ui_MainWindow(object):
 
         self.analyze_button = QPushButton(self.frame)
         self.analyze_button.setObjectName(u"analyze_button")
+        self.analyze_button.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(218, 0, 27);")
 
         self.horizontalLayout_3.addWidget(self.analyze_button)
 
@@ -149,6 +144,8 @@ class Ui_MainWindow(object):
 
         self.update_button = QPushButton(self.frame)
         self.update_button.setObjectName(u"update_button")
+        self.update_button.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(218, 0, 27);")
 
         self.gridLayout_2.addWidget(self.update_button, 9, 0, 1, 1)
 
@@ -159,7 +156,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addLayout(self.horizontalLayout_4, 0, 0, 1, 1)
 
 
-        self.gridLayout.addWidget(self.frame, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)

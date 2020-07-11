@@ -38,7 +38,3 @@ def partially_list(size):
     random.shuffle(data2)
 
     return data1 + data2
-
-
-if __name__ == "__main__":
-    pass
