@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from PySide2.QtWidgets import QMainWindow, QComboBox, QApplication, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QComboBox, QApplication, QMessageBox, QLabel
+from PySide2 import QtCore, QtGui
 
 
 import __db as db
@@ -36,8 +37,6 @@ def histoogramm(tim, merge, selected_file):
     plt.title("Время, сек")
     performance = []
     for i in range(len(tim)):
-        print(tim[i])
-        print(merge[i])
         performance.append(tim[i][0])
         performance.append(merge[i][0])
         plt.text(i * 2 - 0.15,  tim[i][0], tim[i][0], fontsize=15)
@@ -50,8 +49,6 @@ def histoogramm(tim, merge, selected_file):
     plt.title("Количество сравнений")
     performance = []
     for i in range(len(tim)):
-        print(tim[i])
-        print(merge[i])
         performance.append(tim[i][1])
         performance.append(merge[i][1])
         plt.text(i * 2 - 0.15,  tim[i][1], tim[i][1], fontsize=15)
@@ -64,8 +61,6 @@ def histoogramm(tim, merge, selected_file):
     plt.title("Количество перестановок")
     performance = []
     for i in range(len(tim)):
-        print(tim[i])
-        print(merge[i])
         performance.append(tim[i][2])
         performance.append(merge[i][2])
         plt.text(i * 2 - 0.15,  tim[i][2], tim[i][2], fontsize=15)
