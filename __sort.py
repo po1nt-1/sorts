@@ -35,7 +35,8 @@ def merge_sort(L, compare=operator.lt):
         right = merge_sort(L[middle:], compare)
         result = __merge_for_merge(left, right, compare)
 
-        merge_total_time = time.time() - time_start
+        time_end = time.time()
+        merge_total_time = time_end - time_start
         return result
 
 
@@ -97,31 +98,31 @@ def __merge_for_timsort(arr, start, mid, end):
     ind = start
 
     while ind1 < len1 and ind2 < len2:
-        tim_comparisons_count += 1
+        # tim_comparisons_count += 1
         if first[ind1] < last[ind2]:
-            tim_transpositions_count += 1
+            # tim_transpositions_count += 1
 
             arr[ind] = first[ind1]
             ind1 += 1
         else:
-            tim_transpositions_count += 1
+            # tim_transpositions_count += 1
 
             arr[ind] = last[ind2]
             ind2 += 1
         ind += 1
 
     while ind1 < len1:
-        tim_transpositions_count += 1
+        # tim_transpositions_count += 1
 
-        tim_comparisons_count += 1
+        # tim_comparisons_count += 1
         arr[ind] = first[ind1]
         ind1 += 1
         ind += 1
 
     while ind2 < len2:
-        tim_transpositions_count += 1
+        # tim_transpositions_count += 1
 
-        tim_comparisons_count += 1
+        # tim_comparisons_count += 1
         arr[ind] = last[ind2]
         ind2 += 1
         ind += 1
@@ -137,8 +138,7 @@ def tim_sort(arr):
     tim_transpositions_count = 0
     tim_total_time = 0
 
-    arr2 = arr.copy()
-
+    time_start = time.time()
     n = len(arr)
     for start in range(0, n, minrun):
         tim_comparisons_count += 1
@@ -155,8 +155,7 @@ def tim_sort(arr):
             arr = __merge_for_timsort(arr, start, mid, end)
         curr_size *= 2
 
-    time_start = time.time()
-    arr2.sort()
-    tim_total_time = (time.time() - time_start) * 10
+    time_end = time.time()
+    tim_total_time = time_end - time_start
 
     return arr

@@ -157,6 +157,7 @@ class Ui_MainWindow(object):
         self.file_list.setEditTriggers(QAbstractItemView.EditKeyPressed)
         self.file_list.setProperty("showDropIndicator", False)
         self.file_list.setAlternatingRowColors(False)
+        self.file_list.setSelectionMode(QAbstractItemView.MultiSelection)
         self.file_list.setViewMode(QListView.ListMode)
 
         self.gridLayout_2.addWidget(self.file_list, 14, 0, 1, 1)

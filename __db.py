@@ -43,25 +43,16 @@ def read(file_name, folder_name):
     return data
 
 
-def write(data, gen_mode=None, sort_mode=False):
+def write(data, gen_mode):
 
-    if gen_mode is not None:
-        path = os.path.join(get_script_dir(), "generated_lists")
-    elif sort_mode:
-        path = os.path.join(get_script_dir(), "sorted_lists")
+    path = os.path.join(get_script_dir(), "generated_lists")
 
     if not os.path.exists(path):
         os.mkdir(path)
 
-    if gen_mode is not None:
-        path_to_file = path + f"/{gen_mode}_{len(data)}"
-        with open(path_to_file, 'w', encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-
-    if sort_mode:
-        path_to_file = path + f"/{len(data)}_sorted"
-        with open(path_to_file, 'w', encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+    path_to_file = path + f"/{gen_mode}_{len(data)}"
+    with open(path_to_file, 'w', encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 def get_file_list():

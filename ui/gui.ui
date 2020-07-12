@@ -337,6 +337,9 @@ selection-color: rgb(214, 0, 26);</string>
              <property name="alternatingRowColors">
               <bool>false</bool>
              </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::MultiSelection</enum>
+             </property>
              <property name="viewMode">
               <enum>QListView::ListMode</enum>
              </property>

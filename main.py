@@ -19,33 +19,59 @@ class end_error(Exception):
     pass
 
 
-def histoogramm(data1, data2):
+def histoogramm(tim, merge, selected_file):
     mpl.rcParams['toolbar'] = 'None'
-    plt.rcParams['figure.figsize'] = [5, 7]
+
+    plt.rcParams['figure.figsize'] = [4 * len(tim), 7]
     plt.figure(num="Результаты")
-    objects = ('TimeSort', 'MergeSort')
+
+    objects = []
+    for i in range(len(tim)):
+        objects.append(f"TimSort{i}\n{selected_file[i]}")
+        objects.append(f"MergeSort{i}")
     y_pos = np.arange(len(objects))
 
     plt.subplot(5, 1, 1)
     plt.xticks(y_pos, objects)
     plt.title("Время, сек")
-    performance = [data1[0], data2[0]]
+    performance = []
+    for i in range(len(tim)):
+        print(tim[i])
+        print(merge[i])
+        performance.append(tim[i][0])
+        performance.append(merge[i][0])
+        plt.text(i * 2 - 0.15,  tim[i][0], tim[i][0], fontsize=15)
+        plt.text(i * 2 + 0.85, merge[i][0], merge[i][0], fontsize=15)
     plt.bar(y_pos, performance, align='center',
-            alpha=0.9, color=["r", "k"])
+            alpha=0.8, color=["r", "k"])
 
     plt.subplot(5, 1, 3)
-    plt.bar(y_pos, performance, align='center',
-            alpha=0.9, color=["r", "k"])
     plt.xticks(y_pos, objects)
     plt.title("Количество сравнений")
-    performance = [data1[1], data2[1]]
+    performance = []
+    for i in range(len(tim)):
+        print(tim[i])
+        print(merge[i])
+        performance.append(tim[i][1])
+        performance.append(merge[i][1])
+        plt.text(i * 2 - 0.15,  tim[i][1], tim[i][1], fontsize=15)
+        plt.text(i * 2 + 0.85, merge[i][1], merge[i][1], fontsize=15)
+    plt.bar(y_pos, performance, align='center',
+            alpha=0.8, color=["r", "k"])
 
     plt.subplot(5, 1, 5)
-    plt.bar(y_pos, performance, align='center',
-            alpha=0.9, color=["r", "k"])
     plt.xticks(y_pos, objects)
     plt.title("Количество перестановок")
-    performance = [data1[2], data2[2]]
+    performance = []
+    for i in range(len(tim)):
+        print(tim[i])
+        print(merge[i])
+        performance.append(tim[i][2])
+        performance.append(merge[i][2])
+        plt.text(i * 2 - 0.15,  tim[i][2], tim[i][2], fontsize=15)
+        plt.text(i * 2 + 0.85, merge[i][2], merge[i][2], fontsize=15)
+    plt.bar(y_pos, performance, align='center',
+            alpha=0.8, color=["r", "k"])
 
     plt.show()
 
@@ -62,9 +88,11 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         size = self.enter_size_list.text()
         if not size.isdigit():
             QMessageBox.about(self, "Ошибка", "Некорректный ввод")
+            return
 
         elif int(size) < 1:
             QMessageBox.about(self, "Ошибка", "Некорректный ввод")
+            return
         else:
             size = int(size)
             gen_inx = self.select_gen_mode.currentIndex()
@@ -96,6 +124,7 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
             files = db.get_file_list()
         except db.local_error as e:
             QMessageBox.about(self, "Ошибка", str(e))
+            return
 
         self.file_list.clear()
         self.file_list.insertItems(0, files)
@@ -105,42 +134,50 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         global data1
         global data2
 
-        file_num = self.file_list.currentRow()
+        selected_items = self.file_list.selectedIndexes()
+        selected_idx = []
+        for item in selected_items:
+            selected_idx.append(item.row())
 
-        if file_num == -1:
+        if len(selected_idx) == 0:
             QMessageBox.about(self, "Ошибка", "Не выбран файл")
+            return
         else:
-            selected_file = files[file_num]
+            tim = []
+            merge = []
+            current_files = []
+            for idx in selected_idx:
+                selected_file = files[idx]
 
-            self.block()
-            try:
-                data1 = db.read(selected_file, "generated_lists")
-            except db.local_error as e:
-                QMessageBox.about(self, "Ошибка", str(e))
+                current_files.append(selected_file)
 
-            data2 = data1.copy()
+                self.block()
+                try:
+                    data1 = db.read(selected_file, "generated_lists")
+                except db.local_error as e:
+                    QMessageBox.about(self, "Ошибка", str(e))
+                    return
 
-            self.__sort()
+                data2 = data1.copy()
 
-            tim = [sort.tim_total_time, sort.tim_comparisons_count,
-                   sort.tim_transpositions_count]
-            merge = [sort.merge_total_time, sort.merge_comparisons_count,
-                     sort.merge_transpositions_count]
+                self.__sort()
 
-            histoogramm(tim, merge)
+                current_tim_total_time = float(
+                    "%.4f" % sort.tim_total_time)
+                current_merge_total_time = float(
+                    "%.4f" % sort.merge_total_time)
 
+                tim.append([
+                    current_tim_total_time,
+                    sort.tim_comparisons_count,
+                    sort.tim_transpositions_count])
+                merge.append([
+                    current_merge_total_time,
+                    sort.merge_comparisons_count,
+                    sort.merge_transpositions_count])
+
+            histoogramm(tim, merge, current_files)
             self.unlock()
-
-            # debug
-            print("tim_comparisons_count:", sort.tim_comparisons_count)
-            print("tim_transpositions_count:", sort.tim_transpositions_count)
-            print("tim_total_time:", sort.tim_total_time)
-
-            print("merge_comparisons_count:", sort.merge_comparisons_count)
-            print("merge_transpositions_count:",
-                  sort.merge_transpositions_count)
-            print("merge_total_time:", sort.merge_total_time)
-            # debug
 
     def __sort(self):
         global data1
@@ -148,11 +185,6 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
 
         data1_sorted = sort.tim_sort(data1)
         sort.merge_sort(data2)
-
-        try:
-            db.write(data1, sort_mode=True)
-        except db.local_error as e:
-            QMessageBox.about(self, "Ошибка", str(e))
 
     def block(self):
         self.gen_button.setDisabled(True)
