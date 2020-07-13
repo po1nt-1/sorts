@@ -31,10 +31,13 @@ def recurring_list(size):
     return data
 
 
-def partially_list(size):
+def partially_list(size, div):
+    pair_size = size // div
 
-    data1 = [i for i in range(int(size*0.7))]
-    data2 = [i for i in range(int(size*0.7), size)]
-    random.shuffle(data2)
+    return [0, 1, 2, 3]
 
-    return data1 + data2
+
+if __name__ == "__main__":
+    a = partially_list(30, 8)
+    print(a)
+    print("длина", len(a))

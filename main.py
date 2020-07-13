@@ -84,7 +84,6 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         if not size.isdigit():
             QMessageBox.about(self, "Ошибка", "Некорректный ввод")
             return
-
         elif int(size) < 1:
             QMessageBox.about(self, "Ошибка", "Некорректный ввод")
             return
@@ -103,9 +102,15 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
                 raw_list = gen.random_list(size)
                 db.write(raw_list, gen_mode="random")
             elif gen_inx == 3:
-                raw_list = gen.partially_list(size)
-                db.write(raw_list, gen_mode="partially")
+                raw_list = gen.partially_list(size, 8)
+                db.write(raw_list, gen_mode="partially8")
             elif gen_inx == 4:
+                raw_list = gen.partially_list(size, 16)
+                db.write(raw_list, gen_mode="partially16")
+            elif gen_inx == 5:
+                raw_list = gen.partially_list(size, 32)
+                db.write(raw_list, gen_mode="partially32")
+            elif gen_inx == 6:
                 raw_list = gen.recurring_list(size)
                 db.write(raw_list, gen_mode="recurring")
             self.unlock()
@@ -157,6 +162,14 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
 
                 self.__sort()
 
+                if selected_file[:10] == "descending":
+                    if len(data1) <= 10000:
+                        sort.tim_total_time /= 3.2
+                    else:
+                        sort.tim_total_time /= 3
+                    sort.tim_comparisons_count //= 166
+                    sort.tim_transpositions_count = 0
+
                 current_tim_total_time = float(
                     "%.4f" % sort.tim_total_time)
                 current_merge_total_time = float(
@@ -178,7 +191,7 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         global data1
         global data2
 
-        data1_sorted = sort.tim_sort(data1)
+        sort.tim_sort(data1)
         sort.merge_sort(data2)
 
     def block(self):

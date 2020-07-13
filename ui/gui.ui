@@ -278,7 +278,17 @@ color: rgb(255, 255, 255);</string>
              </item>
              <item>
               <property name="text">
-               <string>Частично-упорядоченная</string>
+               <string>Частично упорядоченная 8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Частично упорядоченная 16</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Частично упорядоченная 32</string>
               </property>
              </item>
              <item>

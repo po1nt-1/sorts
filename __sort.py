@@ -27,16 +27,27 @@ def merge_sort(L, compare=operator.lt):
 
     time_start = time.time()
 
+    a = support(L, compare=operator.lt)
+
+    time_end = time.time()
+    merge_total_time = time_end - time_start
+
+    return a
+
+
+def support(L, compare=operator.lt):
+    global merge_comparisons_count
+    global merge_transpositions_count
+    global merge_total_time
+
     if len(L) < 2:
         return L[:]
     else:
         middle = int(len(L) / 2)
-        left = merge_sort(L[:middle], compare)
-        right = merge_sort(L[middle:], compare)
+        left = support(L[:middle], compare)
+        right = support(L[middle:], compare)
         result = __merge_for_merge(left, right, compare)
 
-        time_end = time.time()
-        merge_total_time = time_end - time_start
         return result
 
 
@@ -74,11 +85,13 @@ def __InsSort(arr, start, end):
     for i in range(start+1, end+1):
         elem = arr[i]
         j = i-1
+        tim_comparisons_count += 1
         while j >= start and elem < arr[j]:
             arr[j+1] = arr[j]
             j -= 1
             tim_comparisons_count += 1
             tim_transpositions_count += 1
+
         arr[j+1] = elem
     return arr
 
