@@ -35,9 +35,3 @@ def partially_list(size, div):
     pair_size = size // div
 
     return [0, 1, 2, 3]
-
-
-if __name__ == "__main__":
-    a = partially_list(30, 8)
-    print(a)
-    print("длина", len(a))

@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
+    <width>260</width>
     <height>450</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>250</width>
+    <width>260</width>
     <height>450</height>
    </size>
   </property>
@@ -405,7 +405,7 @@ background-color: rgb(218, 0, 27);</string>
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QPushButton" name="analyze_button">
          <property name="font">
           <font>
@@ -426,6 +426,54 @@ background-color: rgb(218, 0, 27);</string>
           <string>Анализировать</string>
          </property>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QComboBox" name="select_minrun">
+           <property name="font">
+            <font>
+             <family>Microsoft YaHei</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(32, 34, 37);
+color: rgb(255, 255, 255);</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>minrun 32</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>minrun 48</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>minrun 64</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

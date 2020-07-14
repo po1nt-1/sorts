@@ -20,8 +20,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(250, 450)
-        MainWindow.setMinimumSize(QSize(250, 450))
+        MainWindow.resize(260, 450)
+        MainWindow.setMinimumSize(QSize(260, 450))
         MainWindow.setMaximumSize(QSize(250, 450))
         MainWindow.setStyleSheet(u"background-color: rgb(41, 43, 47);\n"
 "alternate-background-color: rgb(218, 0, 27);\n"
@@ -190,7 +190,27 @@ class Ui_MainWindow(object):
         self.analyze_button.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(218, 0, 27);")
 
-        self.gridLayout_3.addWidget(self.analyze_button, 1, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.analyze_button, 2, 0, 1, 1)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_3)
+
+        self.select_minrun = QComboBox(self.frame)
+        self.select_minrun.addItem("")
+        self.select_minrun.addItem("")
+        self.select_minrun.addItem("")
+        self.select_minrun.setObjectName(u"select_minrun")
+        self.select_minrun.setFont(font1)
+        self.select_minrun.setStyleSheet(u"background-color: rgb(32, 34, 37);\n"
+"color: rgb(255, 255, 255);")
+
+        self.horizontalLayout_2.addWidget(self.select_minrun)
+
+
+        self.gridLayout_3.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
 
 
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
@@ -222,5 +242,9 @@ class Ui_MainWindow(object):
 
         self.gen_button.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u043e\u0432\u0430\u0442\u044c", None))
         self.analyze_button.setText(QCoreApplication.translate("MainWindow", u"\u0410\u043d\u0430\u043b\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u0442\u044c", None))
+        self.select_minrun.setItemText(0, QCoreApplication.translate("MainWindow", u"minrun 32", None))
+        self.select_minrun.setItemText(1, QCoreApplication.translate("MainWindow", u"minrun 48", None))
+        self.select_minrun.setItemText(2, QCoreApplication.translate("MainWindow", u"minrun 64", None))
+
     # retranslateUi
 

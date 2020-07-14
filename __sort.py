@@ -14,9 +14,6 @@ merge_transpositions_count = 0
 merge_total_time = 0
 
 
-minrun = 32
-
-
 def merge_sort(L, compare=operator.lt):
     global merge_comparisons_count
     global merge_transpositions_count
@@ -143,7 +140,7 @@ def __merge_for_timsort(arr, start, mid, end):
     return arr
 
 
-def tim_sort(arr):
+def tim_sort(arr, minrun):
     global tim_comparisons_count
     global tim_transpositions_count
     global tim_total_time

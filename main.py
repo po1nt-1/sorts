@@ -191,7 +191,15 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         global data1
         global data2
 
-        sort.tim_sort(data1)
+        minrun_inx = self.select_minrun.currentIndex()
+        if minrun_inx == 0:
+            minrun_inx = 32
+        elif minrun_inx == 1:
+            minrun_inx = 48
+        elif minrun_inx == 2:
+            minrun_inx = 64
+
+        sort.tim_sort(data1, minrun_inx)
         sort.merge_sort(data2)
 
     def block(self):
