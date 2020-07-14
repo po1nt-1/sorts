@@ -220,6 +220,8 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
 
 
 if __name__ == "__main__":
+    # pyinstaller -F --hidden-import=PySide2 --hidden-import=numpy
+    # --hidden-import=matplotlib --noconsole --icon=".ico" ".py"
     app = QApplication()
     qt_app = MyQtApp()
     qt_app.show()
