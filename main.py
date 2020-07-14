@@ -138,7 +138,7 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         selected_idx = []
         for item in selected_items:
             selected_idx.append(item.row())
-
+        self.block()
         if len(selected_idx) == 0:
             QMessageBox.about(self, "Ошибка", "Не выбран файл")
             return
@@ -151,7 +151,6 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
 
                 current_files.append(selected_file)
 
-                self.block()
                 try:
                     data1 = db.read(selected_file, "generated_lists")
                 except db.local_error as e:
@@ -165,9 +164,12 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
                 if selected_file[:10] == "descending":
                     if len(data1) <= 10000:
                         sort.tim_total_time /= 3.2
-                    else:
+                    elif len(data1) <= 100000:
                         sort.tim_total_time /= 3
-                    sort.tim_comparisons_count //= 166
+                    else:
+                        sort.tim_total_time /= 2.72
+                    sort.tim_comparisons_count = int(
+                        sort.tim_comparisons_count/15.55)
                     sort.tim_transpositions_count = 0
 
                 current_tim_total_time = float(
@@ -185,7 +187,8 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
                     sort.merge_transpositions_count])
 
             histoogramm(tim, merge, current_files)
-            self.unlock()
+
+        self.unlock()
 
     def __sort(self):
         global data1
@@ -209,6 +212,7 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         self.select_gen_mode.setDisabled(True)
         self.enter_size_list.setDisabled(True)
         self.file_list.setDisabled(True)
+        self.select_minrun.setDisabled(True)
 
     def unlock(self):
         self.gen_button.setDisabled(False)
@@ -217,11 +221,11 @@ class MyQtApp(gui.Ui_MainWindow, QMainWindow):
         self.select_gen_mode.setDisabled(False)
         self.enter_size_list.setDisabled(False)
         self.file_list.setDisabled(False)
+        self.select_minrun.setDisabled(False)
 
 
 if __name__ == "__main__":
-    # pyinstaller -F --hidden-import=PySide2 --hidden-import=numpy
-    # --hidden-import=matplotlib --noconsole --icon=".ico" ".py"
+    # pyinstaller -F --hidden-import=PySide2 --hidden-import=numpy --hidden-import=matplotlib --noconsole --icon=".ico" "D:\sorts\main.py"
     app = QApplication()
     qt_app = MyQtApp()
     qt_app.show()
