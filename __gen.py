@@ -3,24 +3,24 @@ import random
 
 def increasing_list(size):
 
-    return [i for i in range(size)]
+    return list(range(size))
 
 
 def descending_list(size):
 
-    return [i for i in range(size)][::-1]
+    return list(range(size))[::-1]
 
 
 def random_list(size):
 
-    data = [i for i in range(size)]
+    data = list(range(size))
     random.shuffle(data)
     return data
 
 
 def recurring_list(size):
 
-    numbers = [i for i in range(size)]
+    numbers = list(range(size))
 
     data = []
 
@@ -51,6 +51,6 @@ def partially_list(size, div):
 
     else:
         print("else")
-        data = [i for i in range(size)]
+        data = list(range(size))
 
     return data[::-1]
