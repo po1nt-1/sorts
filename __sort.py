@@ -1,7 +1,6 @@
 import operator
 import time
 
-
 tim_comparisons_count = 0
 tim_transpositions_count = 0
 tim_total_time = 0
