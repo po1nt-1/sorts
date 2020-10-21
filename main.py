@@ -1,8 +1,7 @@
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from PySide2.QtWidgets import QMainWindow, QComboBox, QApplication, QMessageBox, QLabel
-from PySide2 import QtCore, QtGui
+from PySide2.QtWidgets import QMainWindow, QApplication, QMessageBox
 
 
 import __db as db

@@ -1,8 +1,5 @@
 import operator
-import random
 import time
-
-import __gen
 
 
 tim_comparisons_count = 0
