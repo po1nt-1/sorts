@@ -1,15 +1,14 @@
-import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from PySide2.QtWidgets import QMainWindow, QComboBox, QApplication, QMessageBox, QLabel
+import numpy as np
 from PySide2 import QtCore, QtGui
-
+from PySide2.QtWidgets import (QApplication, QComboBox, QLabel, QMainWindow,
+                               QMessageBox)
 
 import __db as db
 import __gen as gen
-import __sort as sort
 import __gui as gui
-
+import __sort as sort
 
 files = []
 data1 = []

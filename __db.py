@@ -1,7 +1,7 @@
-import os
-import json
-import sys
 import inspect
+import json
+import os
+import sys
 
 
 class local_error(Exception):
